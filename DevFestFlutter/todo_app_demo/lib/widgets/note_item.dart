@@ -10,6 +10,7 @@ class NoteItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
+      onDismissed: (direction)=> note.status = 4,
       key: UniqueKey(),
       child: Card(
         margin: const EdgeInsets.symmetric(vertical: 10.0),

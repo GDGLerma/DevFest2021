@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app_demo/data/notes_data.dart';
 import 'package:todo_app_demo/models/note_model.dart';
 import 'package:todo_app_demo/widgets/note_item.dart';
 
@@ -7,36 +8,14 @@ class TaskPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final note = NoteModel(date: DateTime.now(), title: 'Prueba', status: 1);
-    final note2 = NoteModel(date: DateTime.now(), title: 'Prueba', status: 2);
-    final note3 = NoteModel(date: DateTime.now(), title: 'Prueba', status: 3);
-    final note4 = NoteModel(date: DateTime.now(), title: 'Prueba', status: 4);
+    final notesData = NotesData();
+    List<NoteModel> notes = notesData.pendingNotes;
     return SafeArea(
-      child: ListView(
+      child: ListView.builder(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
-        children: [
-          NoteItem(note: note),
-          NoteItem(note: note2),
-          NoteItem(note: note3),
-          NoteItem(note: note4),
-          NoteItem(note: note),
-          NoteItem(note: note2),
-          NoteItem(note: note3),
-          NoteItem(note: note4),
-          NoteItem(note: note),
-          NoteItem(note: note2),
-          NoteItem(note: note3),
-          NoteItem(note: note4),
-          NoteItem(note: note),
-          NoteItem(note: note2),
-          NoteItem(note: note3),
-          NoteItem(note: note4),
-          NoteItem(note: note),
-          NoteItem(note: note2),
-          NoteItem(note: note3),
-          NoteItem(note: note4),
-        ],
-      ),
+        itemCount: notes.length,
+        itemBuilder: (context,position)=>NoteItem(note: notes[position]),
+      )
     );
   }
 }

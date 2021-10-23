@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app_demo/data/notes_data.dart';
+import 'package:todo_app_demo/models/note_model.dart';
 
 class AlertNewTask extends StatefulWidget {
   const AlertNewTask({ Key? key }) : super(key: key);
@@ -17,6 +19,8 @@ class _AlertNewTaskState extends State<AlertNewTask> {
 
   String _status = 'Normal';
 
+  TextEditingController _titleController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -24,7 +28,9 @@ class _AlertNewTaskState extends State<AlertNewTask> {
       title: const Text('Nueva tarea'),
       content: _contentDialog(),
       actions: [
-        ElevatedButton(onPressed: (){}, child: Text('Aceptar'))
+        ElevatedButton(onPressed: ()=>
+          _addNote(context)
+        , child: Text('Aceptar'))
       ],
     );
   }
@@ -35,7 +41,8 @@ class _AlertNewTaskState extends State<AlertNewTask> {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(vertical: 10.0),
-          child: const TextField(
+          child: TextField(
+            controller: _titleController,
             keyboardType: TextInputType.name,
             decoration: InputDecoration(
               icon: Icon(Icons.note_alt),
@@ -66,5 +73,18 @@ class _AlertNewTaskState extends State<AlertNewTask> {
         )
       ],
     );
+  }
+
+  void _addNote(BuildContext context){
+    final notes = NotesData();
+
+    notes.addNote(NoteModel(
+      date: DateTime.now(), 
+      title: _titleController.text,
+      status: _status == 'Normal'?1
+            : _status == 'Importante'?2:3
+      ));
+
+    Navigator.of(context).pop('OK');
   }
 }

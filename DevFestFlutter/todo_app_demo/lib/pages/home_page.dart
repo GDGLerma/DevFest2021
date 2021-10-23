@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app_demo/data/notes_data.dart';
 import 'package:todo_app_demo/pages/completed_page.dart';
 import 'package:todo_app_demo/pages/task_page.dart';
 import 'package:todo_app_demo/widgets/alert_new_task.dart';
@@ -19,13 +20,15 @@ class _HomePageState extends State<HomePage> {
       body: PageView(
         controller: _pageController,
         physics: const NeverScrollableScrollPhysics(),
-        children: const [TaskPage(), CompletedPage()],
+        children: [TaskPage(), CompletedPage()],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () => showDialog(
           context: context,
-          builder: (context)=> const AlertNewTask()),
+          builder: (context)=> const AlertNewTask()).then((value){
+            if(value!=null) setState(() {});
+          }),
         child: const Icon(Icons.add),
       ),
       bottomNavigationBar: BottomNavigationBar(
